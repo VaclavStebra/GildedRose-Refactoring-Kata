@@ -16,6 +16,10 @@
             {
                 return new SulfurasItemUpdater();
             }
+            else if (name == "Conjured")
+            {
+                return new ConjuredItemUpdater();
+            }
             else
             {
                 return new NormalItemUpdater();
