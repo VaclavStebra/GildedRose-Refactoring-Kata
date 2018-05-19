@@ -74,5 +74,15 @@ namespace csharp
             Assert.AreEqual(2, Items[0].SellIn);
             Assert.AreEqual(50, Items[0].Quality);
         }
+
+        [Test]
+        public void SulfurasNeverSoldsOutOrDecreases()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 3, Quality = 30 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(3, Items[0].SellIn);
+            Assert.AreEqual(30, Items[0].Quality);
+        }
     }
 }
