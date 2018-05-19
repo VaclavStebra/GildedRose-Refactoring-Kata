@@ -84,5 +84,45 @@ namespace csharp
             Assert.AreEqual(3, Items[0].SellIn);
             Assert.AreEqual(30, Items[0].Quality);
         }
+
+        [Test]
+        public void BacstageIncreasesInQuality()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 12, Quality = 30 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(11, Items[0].SellIn);
+            Assert.AreEqual(31, Items[0].Quality);
+        }
+
+        [Test]
+        public void WhenLessThan10Days_BacstageIncreasesInQualityTwiceAsMuch()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 30 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(9, Items[0].SellIn);
+            Assert.AreEqual(32, Items[0].Quality);
+        }
+
+        [Test]
+        public void WhenLessThan5Days_BacstageIncreasesInQualityThreeTimesAsMuch()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 30 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(4, Items[0].SellIn);
+            Assert.AreEqual(33, Items[0].Quality);
+        }
+
+        [Test]
+        public void WhenPassed_BacstageDropsToZero()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 6 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(-1, Items[0].SellIn);
+            Assert.AreEqual(0, Items[0].Quality);
+        }
     }
 }
