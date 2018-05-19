@@ -2,9 +2,9 @@
 
 namespace csharp
 {
-    class AgedBrieItemUpdater : IItemUpdater
+    class AgedBrieItemUpdater : AbstractItemUpdater
     {
-        public void Update(Item item)
+        public override void Update(Item item)
         {
             int increaseRate = GetQualityChangeRate(item);
             item.Quality = Math.Min(50, item.Quality + increaseRate);
@@ -14,11 +14,6 @@ namespace csharp
         private int GetQualityChangeRate(Item item)
         {
             return HasPassed(item) ? 2 : 1;
-        }
-
-        private bool HasPassed(Item item)
-        {
-            return item.SellIn == 0;
         }
     }
 }

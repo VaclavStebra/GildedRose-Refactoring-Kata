@@ -2,9 +2,9 @@
 
 namespace csharp
 {
-    class BackstagePassesItemUpdater : IItemUpdater
+    class BackstagePassesItemUpdater : AbstractItemUpdater
     {
-        public void Update(Item item)
+        public override void Update(Item item)
         {
             if (HasPassed(item))
             {
@@ -12,19 +12,14 @@ namespace csharp
             }
             else
             {
-                int increaseRate = GetQualityChangeRateForBackStagePasses(item);
+                int increaseRate = GetQualityChangeRate(item);
                 item.Quality = Math.Min(50, item.Quality + increaseRate);
             }
 
             item.SellIn--;
         }
 
-        private bool HasPassed(Item item)
-        {
-            return item.SellIn == 0;
-        }
-
-        private int GetQualityChangeRateForBackStagePasses(Item item)
+        private int GetQualityChangeRate(Item item)
         {
             if (item.SellIn < 6)
             {
