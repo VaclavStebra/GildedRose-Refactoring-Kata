@@ -49,10 +49,10 @@ namespace csharp
         [Test]
         public void WhenSellInHasPassed_QualityIncreasesTwiceAsMuch()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 0, Quality = 3 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = -1, Quality = 3 } };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
-            Assert.AreEqual(-1, Items[0].SellIn);
+            Assert.AreEqual(-2, Items[0].SellIn);
             Assert.AreEqual(5, Items[0].Quality);
         }
 
@@ -113,6 +113,16 @@ namespace csharp
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.AreEqual(-1, Items[0].SellIn);
+            Assert.AreEqual(0, Items[0].Quality);
+        }
+
+        [Test]
+        public void WhenHasAlreadyPassed_BacstageDropsToZero()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = -10, Quality = 6 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(-11, Items[0].SellIn);
             Assert.AreEqual(0, Items[0].Quality);
         }
 

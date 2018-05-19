@@ -6,7 +6,7 @@
 
         protected bool HasPassed(Item item)
         {
-            return item.SellIn == 0;
+            return item.SellIn <= 0;
         }
     }
 }
