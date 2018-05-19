@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace csharp
 {
@@ -35,32 +36,26 @@ namespace csharp
 
         private void UpdateNormalItem(Item item)
         {
-            if (item.Quality > 0)
-            {
-                item.Quality--;
-            }
-
+            int decreaseRate = HasPassed(item) ? 2 : 1;
+            item.Quality = Math.Max(0, item.Quality - decreaseRate);
             item.SellIn--;
+        }
 
-            if (item.SellIn < 0)
-            {
-                item.Quality--;
-            }
+        private bool HasPassed(Item item)
+        {
+            return item.SellIn == 0;
         }
 
         private void UpdateAgedBrieItem(Item item)
         {
-            if (item.Quality < 50)
-            {
-                item.Quality++;
-            }
-
+            int increaseRate = GetQualityChangeRate(item);
+            item.Quality = Math.Min(50, item.Quality + increaseRate);
             item.SellIn--;
+        }
 
-            if (item.SellIn < 0)
-            {
-                item.Quality++;
-            }
+        private int GetQualityChangeRate(Item item)
+        {
+            return HasPassed(item) ? 2 : 1;
         }
 
         private void UpdateSulfurasItem(Item item)
@@ -70,32 +65,31 @@ namespace csharp
 
         private void UpdateBackstagePassesItem(Item item)
         {
-            if (item.Quality < 50)
-            {
-                item.Quality++;
-
-                if (item.SellIn < 11)
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality++;
-                    }
-                }
-
-                if (item.SellIn < 6)
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality++;
-                    }
-                }
-            }
-
-            item.SellIn--;
-
-            if (item.SellIn < 0)
+            if (HasPassed(item))
             {
                 item.Quality = 0;
+            }
+            else
+            {
+                int increaseRate = GetQualityChangeRateForBackStagePasses(item);
+                item.Quality = Math.Min(50, item.Quality + increaseRate);
+            }            
+
+            item.SellIn--;
+        }
+
+        private int GetQualityChangeRateForBackStagePasses(Item item)
+        {
+            if (item.SellIn < 6)
+            {
+                return 3;
+            }
+            else if (item.SellIn < 11)
+            {
+                return 2;
+            } else
+            {
+                return 1;
             }
         }
     }
