@@ -1,4 +1,4 @@
-﻿namespace csharp
+﻿namespace csharp.ItemUpdaters
 {
     class SulfurasItemUpdater : AbstractItemUpdater
     {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using csharp.ItemUpdaters;
 
 namespace csharp
 {
@@ -14,25 +15,7 @@ namespace csharp
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                IItemUpdater itemUpdater;
-
-                if (Items[i].Name == "Aged Brie")
-                {
-                    itemUpdater = new AgedBrieItemUpdater();
-                }
-                else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    itemUpdater = new BackstagePassesItemUpdater();
-                }
-                else if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
-                {
-                    itemUpdater = new SulfurasItemUpdater();
-                }
-                else
-                {
-                    itemUpdater = new NormalItemUpdater();
-                }
-
+                IItemUpdater itemUpdater = ItemUpdaterFactory.GetItemUpdater(Items[i].Name);
                 itemUpdater.Update(Items[i]);
             }
         }

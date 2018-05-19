@@ -1,4 +1,4 @@
-﻿namespace csharp
+﻿namespace csharp.ItemUpdaters
 {
     abstract class AbstractItemUpdater : IItemUpdater
     {

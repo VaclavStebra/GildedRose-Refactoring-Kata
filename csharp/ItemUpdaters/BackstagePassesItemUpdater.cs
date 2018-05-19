@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace csharp
+namespace csharp.ItemUpdaters
 {
     class BackstagePassesItemUpdater : AbstractItemUpdater
     {
