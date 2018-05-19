@@ -44,5 +44,35 @@ namespace csharp
             Assert.AreEqual(-1, Items[0].SellIn);
             Assert.AreEqual(0, Items[0].Quality);
         }
+
+        [Test]
+        public void AgedBrieInreasesInQuality()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 3, Quality = 2 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(2, Items[0].SellIn);
+            Assert.AreEqual(3, Items[0].Quality);
+        }
+
+        [Test]
+        public void WhenSellInHasPassed_QualityIncreasesTwiceAsMuch()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 0, Quality = 3 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(-1, Items[0].SellIn);
+            Assert.AreEqual(5, Items[0].Quality);
+        }
+
+        [Test]
+        public void WhenQualityIsFifty_ItDoesNotIncrease()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 3, Quality = 50 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(2, Items[0].SellIn);
+            Assert.AreEqual(50, Items[0].Quality);
+        }
     }
 }
