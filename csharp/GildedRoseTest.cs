@@ -115,5 +115,35 @@ namespace csharp
             Assert.AreEqual(-1, Items[0].SellIn);
             Assert.AreEqual(0, Items[0].Quality);
         }
+
+        [Test]
+        public void GivenConjuredItem_DecradesTwiceAsFast()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured", SellIn = 3, Quality = 6 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(2, Items[0].SellIn);
+            Assert.AreEqual(4, Items[0].Quality);
+        }
+
+        [Test]
+        public void GivenConjuredItemWhichHasPassed_DecradesTwiceAsFastAsNormalPassedItem()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured", SellIn = 0, Quality = 6 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(-1, Items[0].SellIn);
+            Assert.AreEqual(2, Items[0].Quality);
+        }
+
+        [Test]
+        public void GivenConjuredItem_QualityDoesNotDecreaseBelowZero()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured", SellIn = 4, Quality = 1 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.AreEqual(3, Items[0].SellIn);
+            Assert.AreEqual(0, Items[0].Quality);
+        }
     }
 }
